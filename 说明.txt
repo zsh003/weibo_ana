@@ -1,0 +1,17 @@
+
+环境说明：
+python3.8及以上
+
+
+管理员账号：admin    密码：123
+用户账号 ：user         密码：123
+
+安装MySQL数据库，Navicat导入数据库文件
+数据库改成自己本地的账号密码
+
+
+运行命令：
+python manage.py runserver
+
+
+

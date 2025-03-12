@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block main_body %}
+
+<html>
+<head>
+    <title>Google Search</title>
+    <style>
+        body {
+        background-color: #fff;
+        font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 700px;
+            margin: 0 auto;
+            padding-top: 150px;
+            text-align: center;
+        }
+
+        h1 {
+        color: #4285f4;
+           font-size: 70px;
+           text-align:center;
+           margin: 0;
+           line-height: 1;
+           font-weight: normal;
+        }
+
+        form {
+           margin-top: 50px;
+        }
+
+        input[type="text"], input[type="number"] {
+           width: 70%;
+           padding: 12px;
+           margin: 8px 0;
+           box-sizing: border-box;
+           border: 2px solid #4285f4;
+           border-radius: 20px;
+           background-color: #f2f2f2;
+           font-size: 16px;
+           color: #1a1a1a;
+           outline: none;
+           transition: border-color 0.3s ease-in-out;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #3367d6;
+        }
+
+        input[type="submit"] {
+           background-color: #4285f4;
+           color: #fff;
+           padding: 14px 20px;
+           margin: 8px 0;
+           border: none;
+           border-radius: 20px;
+           cursor: pointer;
+           font-size: 16px;
+           transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3367d6;
+        }
+    </style>
+</head>
+<body>
+{#        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-30 my-2 my-md-0 mw-100 navbar-search" action="{% url 'user_doSearch' %}" method="post">#}
+{#            {% csrf_token %}#}
+{#            <div class="input-group" >#}
+{#                <input type="text" name="keyword" style="width:900px;margin:auto;" placeholder="输入爬取对象，如：单位名称/产品、品牌名称/事件名称/人名，爬取微博相关信息热点。">#}
+{#                <input type="submit" value="搜索" style="text-align:center">#}
+{#            </div>#}
+{#        </form>#}
+        <br><br>
+        <div><sapn style="color:#6699ff;font-size:24px " >微博热搜榜</sapn><span style="font-size:15px; color:#6699ff">  (实时热点，每刷新一次将会更新):</span></div>
+        <ul class="list-group">
+          {% for item in hot_list %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="badge badge-primary badge-pill">{{ item.hotness }}</span>
+                <span style="margin:auto">{{ item.i }}、<a href="https://s.weibo.com/weibo?q=%23{{ item.title }}%23">{{ item.title }}</a></span>
+                <span class="badge badge-secondary" style="background-color:#ff9966">{{ item.category }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+</body>
+</html>
+{% endblock %}
+
+

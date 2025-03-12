@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block main_body %}
+
+<html>
+<head>
+    <title>Google Search</title>
+    <style>
+        body {
+        background-color: #fff;
+        font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 700px;
+            margin: 0 auto;
+            padding-top: 150px;
+            text-align: center;
+        }
+
+        h1 {
+        color: #4285f4;
+           font-size: 70px;
+           text-align:center;
+           margin: 0;
+           line-height: 1;
+           font-weight: normal;
+        }
+
+        form {
+           margin-top: 50px;
+        }
+
+        input[type="text"], input[type="number"] {
+           width: 70%;
+           padding: 12px;
+           margin: 8px 0;
+           box-sizing: border-box;
+           border: 2px solid #4285f4;
+           border-radius: 20px;
+           background-color: #f2f2f2;
+           font-size: 16px;
+           color: #1a1a1a;
+           outline: none;
+           transition: border-color 0.3s ease-in-out;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #3367d6;
+        }
+
+        input[type="submit"] {
+           background-color: #4285f4;
+           color: #fff;
+           padding: 14px 20px;
+           margin: 8px 0;
+           border: none;
+           border-radius: 20px;
+           cursor: pointer;
+           font-size: 16px;
+           transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3367d6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-30 my-2 my-md-0 mw-100 navbar-search" action="{% url 'doOpitionSearch'%}" method="post">
+            {% csrf_token %}
+            <h3 style="color:#6699ff;text-align:center;">关键词搜索：</h3>
+            <div class="input-group" style="text-align:center">
+                <input type="hidden" name="uid" value="{{ request.session.user.id }}">
+                <input type="text" name="search" style="width:500px;" placeholder="输入分析对象，如：事件名称/人名/单位名称">
+<!--                <input type="number" name="Threshold" placeholder="请输入一个你想要的舆情阈值：x">-->
+                <input type="submit" value="新建报告" style="text-align:center">
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}
+
+

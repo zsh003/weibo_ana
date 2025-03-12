@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block main_body %}
+    <h1 class="h3 mb-2 text-gray-800">个人信息</h1>{{ info }}
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr class="table-primary">
+                                            <th>属性</th>
+                                            <th>信息</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="table-waring">
+                                          <td>ID</td>
+                                          <td>{{ id }}</td>
+                                        </tr>
+                                        <tr class="table-waring">
+                                          <td>账号</td>
+                                          <td>{{ username }}</td>
+                                        </tr>
+                                        <tr class="table-waring">
+                                          <td>昵称</td>
+                                          <td>{{ nickname }}</td>
+                                        </tr>
+                                        <tr class="table-waring">
+                                          <td>手机号</td>
+                                          <td>{{ phone }}</td>
+                                        </tr>
+                                        <tr class="table-waring">
+                                          <td>状态</td>
+                                          <td>{% if status == 1  %}
+                                                <span style="color: green">正常</span>
+                                              {% elif status == 2  %}
+                                                  <span style="color: red">禁用</span>
+                                              {% elif status == 6  %}
+                                                  <span style="color: blue">管理员</span>
+                                              {% elif status == 9  %}
+                                                  <span style="color: red">已删除</span>
+                                              {% else %}
+                                                  <span style="color: red">未知状态</span>
+                                              {% endif %}</td>
+                                        </tr>
+                                        <tr class="table-waring">
+                                          <td>你关心的事件：</td>
+                                          <td>{{ keyword }}</td>
+                                        </tr>
+                                        <tr class="table-waring">
+                                          <td>你想要设置的阈值</td>
+                                          <td>{{ Threshold }}</td>
+                                        </tr>
+
+                                        <tr class="table-waring">
+                                          <td>创建时间</td>
+                                          <td>{{ created_at|date:'Y-m-d H:i:s' }}</td>
+                                        </tr>
+                                        <tr class="table-waring">
+                                          <td>修改时间</td>
+                                          <td>{{ updated_at|date:'Y-m-d H:i:s' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a href="{% url 'user_edit' request.session.user.id %}" type="button" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 修改</a>
+                    </div>
+{% endblock %}

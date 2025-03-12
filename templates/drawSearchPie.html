@@ -1,0 +1,101 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=line-smooth
+-->
+{% extends 'base.html' %}
+
+{% block main_body %}
+{% load staticfiles %}
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%">
+            <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary" style="font-size:24px;">舆情分析报告</h6>
+                    </div>
+                    <div class="card-body">
+                        <div style="text-align:center">
+                            <div id="chart" style="width:600px;height:400px;">
+                            </div>
+                        </div>
+                        <hr>
+                        {% for vo in z_data %}
+                         以上为舆情情感分类分析饼图：<br>
+                          您查询了关键词为“{{ vo.search }}”的舆情信息，为您生成情感分类饼图，
+                          其中评论中带有积极情感的评论有{{ vo.positive }}条，
+                          情感为较好的评论有{{ vo.mid }}条，
+                          情感为普通的用户有{{ vo.midup }}条，
+                          情感为消极的用户有{{ vo.negative }}条。
+                        {% endfor %}
+                    </div>
+                </div>
+        </div>
+        <script type="text/javascript" src="{% static 'dist/echarts.min.js'%}"></script>
+        <script src="{% static 'dist/jquery.js'%}"></script>
+
+        <script type="text/javascript">
+<!--            获取到一个HTML元素-->
+            var dom = document.getElementById('chart');
+<!--            初始化一个Echart实例，与容器绑定-->
+            var myChart = echarts.init(dom);
+            var app = {};
+            var option;
+            var x_data=[];
+            var search;
+
+<!--            通过$.ajax发送异步请求，从后端接口/getSearchPieData获取数据-->
+            $.ajax({
+                type:'get',
+                url:'/getSearchPieData',
+                async:false,
+                success:function (data){
+                    x_data=data.x_data
+                }
+            })
+<!--            定义Javascript对象，用于配置EChart图标显示方式-->
+            option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [{
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 40,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data:x_data
+                }]
+            };
+
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+        </script>
+           {% endblock %}
+    </body>
+</html>
+    

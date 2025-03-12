@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block main_body %}
+    <!-- Page Heading -->
+
+    {% if  '负面舆情预警' in warning_info %}
+        <p class="mb-4" style="color: red">{{ warning_info }}</p>
+    {% else %}
+        <p class="mb-4" style="color: green">{{ warning_info }}</p>
+    {% endif%}
+    <!-- Content Row -->
+    <div class="container">
+        <ul class="nav nav-pills" role="tablist" >
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#menu1">情感分类</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#menu2">活跃度地图</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" data-toggle="pill" href="#menu3">关键词云图</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" data-toggle="pill" href="#menu4">微博帖子热度排名</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" data-toggle="pill" href="#menu5">热门评论排名</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" data-toggle="pill" href="#menu6">舆情预测</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+
+<!--        舆情分析占比--><!--col-xl-6 col-lg-6 -->
+            <div id="menu1" class="col-xl-10 col-lg-10 tab-pane active">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">舆情分析报告</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="embed-responsive embed-responsive-16by9">
+                           <iframe src="{% url 'drawSearchPie' %}"></iframe>
+                        </div>
+                        <hr>
+                        {% for vo in z_data %}
+                         以上为舆情情感分类分析饼图：<br>
+                          您查询了关键词为“{{ vo.search }}”的舆情信息，为您生成情感分类饼图，
+                          其中评论中带有积极情感的评论有{{ vo.positive }}条，
+                          情感为较好的评论有{{ vo.mid }}条，
+                          情感为普通的用户有{{ vo.midup }}条，
+                          情感为消极的用户有{{ vo.negative }}条。
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+<!--            活跃度地图-->
+            <div id="menu2" class="col-xl-10 col-lg-10 tab-pane active">
+                <h1 class="h3 mb-2 text-gray-800">用户地图分布</h1>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                    </div>
+                    <div class="card-body">
+                       <div style="width: 100%;height: 100%">
+                           <div class="embed-responsive embed-responsive-16by9">
+                               <iframe src="{% url 'drawMap' %}"></iframe>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+<!--            关键词云图-->
+            <div id="menu3" class="container tab-pane fade"><br>
+                <h2>这是关键词云图</h2>
+                <h1 class="h3 mb-2 text-gray-800">Charts</h1>
+                <!-- Main content -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">关键词云图</h6>
+                    </div>
+                    <div class="card-body">
+                       <div style="width: 100%;height: 100%">
+                            <img src="./static/img/wc.jpg" style="width: 1000px;height: 600px;margin-top: 0px">
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--帖子热度-->
+            <div id="menu4" class="container tab-pane fade"><br>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">微博帖子</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>微博</th>
+                                        <th>地区</th>
+                                        <th>评论数</th>
+                                        <th>赞同数</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for vo in y_data %}
+                                        <tr>
+                                          <td>{{ vo.screen_name }}</td>
+                                          <td>{{ vo.text }}</td>
+                                          <td>{{ vo.city }}</td>
+                                          <td>{{ vo.comments_count }}</td>
+                                          <td>{{ vo.attitudes_count }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+<!--        热门评论排名-->
+            <div id="menu5" class="container tab-pane fade"><br>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>评论</th>
+                                        <th>地区</th>
+                                        <th>赞同数</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for vo in x_data %}
+                                        <tr>
+                                          <td>{{ vo.screen_name }}</td>
+                                          <td>{{ vo.comment }}</td>
+                                          <td>{{ vo.source }}</td>
+                                          <td>{{ vo.like_count }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--            舆情预测-->
+            <div id="menu6" class="container tab-pane active"><br>
+                <h1 class="h3 mb-2 text-gray-800">这是预测</h1>
+                    <div class="card-body">
+                       <div style="width: 100%;height: 100%">
+                           <div class="embed-responsive embed-responsive-16by9">
+                               <iframe src="{% url 'drawPredict' %}"></iframe>
+                           </div>
+                       </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+{% endblock %}

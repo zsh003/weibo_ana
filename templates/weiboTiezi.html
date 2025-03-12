@@ -1,0 +1,46 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=line-smooth
+-->
+{% extends 'base.html' %}
+
+{% block main_body %}
+{% load staticfiles %}
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">微博帖子</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>微博</th>
+                                        <th>地区</th>
+                                        <th>评论数</th>
+                                        <th>赞同数</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for vo in y_data %}
+                                        <tr>
+                                          <td>{{ vo.screen_name }}</td>
+                                          <td>{{ vo.text }}</td>
+                                          <td>{{ vo.city }}</td>
+                                          <td>{{ vo.comments_count }}</td>
+                                          <td>{{ vo.attitudes_count }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+           {% endblock %}
+    </body>
+</html>

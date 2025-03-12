@@ -1,0 +1,60 @@
+{% extends 'myadmin/base.html' %}
+
+{% block main_body %}
+
+    <h1 class="h3 mb-2 text-gray-800">用户管理</h1>
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                              <th>用户帐号</th>
+                                              <th>用户昵称</th>
+                                              <th>用户电话</th>
+                                              <th>当前状态</th>
+                                              <th>关心的事件</th>
+                                              <th>该事件阈值</th>
+                                              <th>添加时间</th>
+                                              <th>修改时间</th>
+                                              <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for vo in userlist %}
+                    <tr>
+                      <td>{{ vo.id }}</td>
+                      <td>{{ vo.username }}</td>
+                      <td>{{ vo.nickname }}</td>
+                      <td>{{ vo.phone }}</td>
+                      <td>
+                          {% if vo.status == 1  %}
+                              <span style="color: green">正常</span>
+                          {% elif vo.status == 2  %}
+                              <span style="color: red">禁用</span>
+                          {% elif vo.status == 6  %}
+                              <span style="color: blue">管理员</span>
+                          {% elif vo.status == 9  %}
+                              <span style="color: red">已删除</span>
+                          {% else %}
+                              <span style="color: red">未知状态</span>
+                          {% endif %}
+                      </td>
+                        <td>{{ vo.keyword }}</td>
+                        <td>{{ vo.Threshold }}</td>
+                      <td>{{ vo.create_at|date:'Y-m-d H:i:s' }}</td>
+                      <td>{{ vo.update_at|date:'Y-m-d H:i:s'  }}</td>
+                      <td>
+                          <a href="{% url 'myadmin_user_edit' vo.id %}" type="button" class="btn btn-warning btn-xs">
+                          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 修改</a>
+
+                      </td>
+                    </tr>
+                  {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+{% endblock %}

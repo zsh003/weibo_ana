@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block main_body %}
+{% load staticfiles %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ECharts 折线图</title>
+    <!-- 引入 ECharts -->
+    <script type="text/javascript" src="{% static 'dist/echarts.min.js'%}"></script>
+    <script src="{% static 'dist/jquery.js'%}"></script>
+    <script src="{% static 'dist/china.js'%}"></script>
+</head>
+<body>
+<h2  class="m-0 font-weight-bold text-primary" style="font-size:24px;">预测折线图</h2>
+    <div id="chart" style="width: 1000px; height: 500px;"></div>
+<script type="text/javascript">
+$.ajax({
+    type:'get',
+    url:'/getPredictData',
+    success:function (data){
+        console.log(data)
+        // 填入数据
+        x_data = data.x_data;
+        y1_data = data.y_data1;
+        y2_data = data.y_data2;
+        y3_data = data.y_data3;
+        let chart = echarts.init(document.getElementById('chart'));
+        let option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['真实值', '拟合值', '预测值']
+            },
+            xAxis: {
+                type: 'category',
+                data: x_data
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '真实值',
+                    data: y1_data,
+                    type: 'line',
+                    color: '#3e768b',
+                    symbolSize: 0
+                },
+                {
+                    name: '拟合值',
+                    data: y2_data,
+                    type: 'line',
+                    color: '#87df3e',
+                    symbolSize: 0
+                },
+                {
+                    name: '预测值',
+                    data: y3_data,
+                    type: 'line',
+                    color: '#f2a714',
+                    symbolSize: 0
+                }
+            ]
+        };
+        chart.setOption(option);
+        chart.on('mouseover', function (params) {
+            var dataIndex = params.dataIndex;
+            console.log(params);
+        });
+    }
+})
+</script>
+{% endblock %}
+</body>
+</html>

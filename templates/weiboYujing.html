@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block style %}
+<style>
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .card-body {
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 20px;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+</style>
+{% endblock %}
+
+{% block main_body %}
+    {% if  '负面舆情预警' in warning_info %}
+        <p class="mb-4" style="font-size:20px; color: red">{{ warning_info }}</p>
+        <form class="card-body" action="{% url 'doOpitionSearch1' %}" method="post">
+        <input type="hidden" name="keyword" value="{{ keyword }}">
+        <input type="hidden" name="Threshold" value="{{ Threshold }}">
+        <button type="submit" class="btn btn-primary" style="margin:center">查看报告</button> &nbsp;
+    </form>
+    {% else %}
+        <p class="mb-4" style="font-size:20px; color: green">{{ warning_info }}</p>
+<form class="form-horizontal" action="{% url 'doOpitionSearch1' %}" method="post">
+        <input type="hidden" name="keyword" value="{{ keyword }}">
+        <input type="hidden" name="Threshold" value="{{ Threshold }}">
+        <button type="submit" class="btn btn-primary" style="margin:center">查看报告</button> &nbsp;
+    </form>
+    {% endif%}
+
+{% endblock %}

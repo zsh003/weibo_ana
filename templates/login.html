@@ -30,14 +30,14 @@
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-7 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
+<!--                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>-->
+                            <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">微博舆情分析系统</h1>
@@ -60,10 +60,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a>登录角色：管理员、普通用户</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="{% url 'myadmin_register' %}">注册一个新账户！</a>
+                                        <a class="small" href="{% url 'myadmin_register' %}">注册账户</a>
                                     </div>
                                     <div style="color:red">{{ info }}</div>
                                 </div>
